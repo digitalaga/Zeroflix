@@ -118,9 +118,9 @@ document.querySelectorAll('a[onclick*="location.href=\'/mobile/?app=2\';"]').for
 });
 
 // Set "nav-logo" width to 20% of viewport width
-let navLogo = document.querySelector(".nav-logo");
+let navLogo = document.querySelector(".brand-logo");
 if (navLogo) {
-    navLogo.style.width = "20vw"; // 20% of viewport width
+    navLogo.style.width = "30vw"; // 20% of viewport width
     navLogo.style.height = "auto"; // Maintain aspect ratio
 }
 
