@@ -117,4 +117,11 @@ document.querySelectorAll('a[onclick*="location.href=\'/mobile/?app=2\';"]').for
     a.removeAttribute("onclick");
 });
 
+// Set "nav-logo" width to 20% of viewport width
+let navLogo = document.querySelector(".nav-logo");
+if (navLogo) {
+    navLogo.style.width = "20vw"; // 20% of viewport width
+    navLogo.style.height = "auto"; // Maintain aspect ratio
+}
+
 console.log("All modifications applied successfully!");
