@@ -1,25 +1,24 @@
 // Function to detect when user returns to netfree.cc and reload the page twice
 function detectReturnToNetfree() {
     let lastUrl = "";
-    
+
     setInterval(() => {
         let currentUrl = window.location.href;
-        
+
         if (!currentUrl.includes("netfree.cc")) {
             lastUrl = currentUrl;
         } else if (lastUrl && currentUrl.includes("netfree.cc")) {
-            // Reload the page twice when returning to netfree.cc
             location.reload();
             setTimeout(() => location.reload(), 500);
-            lastUrl = ""; // Reset to prevent continuous reloads
+            lastUrl = "";
         }
-    }, 1000); // Check every second
+    }, 1000);
 }
 
 // Execute return detection
 detectReturnToNetfree();
 
-// Existing JS modifications
+// Add loading screen
 let loadingOverlay = document.createElement("div");
 loadingOverlay.style.position = "fixed";
 loadingOverlay.style.top = "0";
@@ -50,10 +49,17 @@ loadingSpinner.style.animation = "spin 1s linear infinite";
 
 let styleSheet = document.createElement("style");
 styleSheet.innerHTML = `
-@keyframes spin {
-  0% { transform: rotate(0deg); }
-  100% { transform: rotate(360deg); }
-}`;
+    @keyframes spin {
+        0% { transform: rotate(0deg); }
+        100% { transform: rotate(360deg); }
+    }
+
+    article .card-img-container img.loading, 
+    .top10-img-1.loading,
+    article .card-img-container img.error {
+        background: #0000 url("https://i.postimg.cc/28sfgH23/20250331-003104.jpg") center/130% no-repeat;
+    }
+`;
 document.head.appendChild(styleSheet);
 
 loadingContainer.appendChild(loadingImage);
@@ -74,7 +80,7 @@ document.querySelectorAll(".telemsg").forEach(element => element.remove());
 let accountDiv = document.querySelector(".account");
 if (accountDiv) accountDiv.remove();
 
-// Replace all images matching "https://netfree.cc/mobile/img/p11111.png"
+// Replace images
 document.querySelectorAll('img[src="https://netfree.cc/mobile/img/p11111.png"]').forEach(img => {
     img.src = "https://i.postimg.cc/28sfgH23/20250331-003104.jpg";
 });
@@ -87,11 +93,12 @@ let disneyDiv = document.querySelector('.iconClass.disneyplus');
 if (disneyDiv) {
     let img = document.createElement("img");
     img.src = "https://i.postimg.cc/Hntg3JL9/99ea8317d4057161b002f47d0827d852.png";
-    img.style.width = "50px";  
-    img.style.height = "50px";  
+    img.style.width = "50px";
+    img.style.height = "50px";
     disneyDiv.replaceWith(img);
 }
 
+// Update favicon
 let favicon = document.querySelector("link[rel~='icon']");
 if (favicon) {
     favicon.href = "https://i.postimg.cc/Hntg3JL9/99ea8317d4057161b002f47d0827d852.png";
@@ -102,6 +109,7 @@ if (favicon) {
     document.head.appendChild(favicon);
 }
 
+// Replace text occurrences
 document.querySelectorAll('a, p').forEach(element => {
     let oldHTML = element.innerHTML;
     let newHTML = oldHTML.replace(/NETMIRROR/g, "Zeroflix").replace(/NetMirror/g, "Zeroflix");
@@ -109,7 +117,7 @@ document.querySelectorAll('a, p').forEach(element => {
     if (newHTML !== oldHTML && element.tagName === "A") {
         element.removeAttribute("href");
     }
-    
+
     element.innerHTML = newHTML;
 });
 
@@ -117,11 +125,11 @@ document.querySelectorAll('a[onclick*="location.href=\'/mobile/?app=2\';"]').for
     a.removeAttribute("onclick");
 });
 
-// Set "nav-logo" width to 20% of viewport width
+// Set "nav-logo" width
 let navLogo = document.querySelector(".brand-logo");
 if (navLogo) {
-    navLogo.style.width = "25vw"; // 20% of viewport width
-    navLogo.style.height = "auto"; // Maintain aspect ratio
+    navLogo.style.width = "25vw";
+    navLogo.style.height = "auto";
 }
 
 console.log("All modifications applied successfully!");
