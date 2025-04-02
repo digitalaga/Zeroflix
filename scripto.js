@@ -128,7 +128,7 @@ document.querySelectorAll('a[onclick*="location.href=\'/mobile/?app=2\';"]').for
 // Set "nav-logo" width
 let navLogo = document.querySelector(".brand-logo");
 if (navLogo) {
-    navLogo.style.width = "25vw";
+    navLogo.style.width = "20vw";
     navLogo.style.height = "auto";
 }
 
