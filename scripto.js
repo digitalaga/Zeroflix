@@ -66,7 +66,7 @@ styleSheet.innerHTML = `
     }
 
     .header .brand-logo {
-        width: 12vw !important;
+        width: 20vw !important;
         transition: all 1s ease-in-out;
         pointer-events: none;
     }
