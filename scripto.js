@@ -1,3 +1,8 @@
+// Redirect if not on netfree.cc
+if (!window.location.href.includes("netfree")) {
+    window.location.href = "https://digitalaga.github.io/ZeroflixWeb/ad.html";
+}
+
 // Function to detect when user returns to netfree.cc and reload the page twice
 function detectReturnToNetfree() {
     let lastUrl = "";
