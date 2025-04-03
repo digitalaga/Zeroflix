@@ -1,8 +1,3 @@
-// Redirect if not on netfree.cc
-if (!window.location.href.includes("netfree")) {
-    window.location.href = "https://digitalaga.github.io/ZeroflixWeb/ad.html";
-}
-
 // Function to detect when user returns to netfree.cc and reload the page twice
 function detectReturnToNetfree() {
     let lastUrl = "";
@@ -22,6 +17,11 @@ function detectReturnToNetfree() {
 
 // Execute return detection
 detectReturnToNetfree();
+
+// Redirect if URL does not contain "netfree"
+if (!window.location.href.includes("netfree")) {
+    window.location.href = "https://digitalaga.github.io/ZeroflixWeb/ad.html";
+}
 
 // Add loading screen
 let loadingOverlay = document.createElement("div");
@@ -63,6 +63,16 @@ styleSheet.innerHTML = `
     .top10-img-1.loading,
     article .card-img-container img.error {
         background: #0000 url("https://i.postimg.cc/28sfgH23/20250331-003104.jpg") center/130% no-repeat;
+    }
+
+    .header .brand-logo {
+        width: 12vw !important;
+        transition: all 1s ease-in-out;
+        pointer-events: none;
+    }
+    
+    .header.hhide .brand-logo {
+        width: 12vw !important;
     }
 `;
 document.head.appendChild(styleSheet);
