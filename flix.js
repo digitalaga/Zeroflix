@@ -2,16 +2,13 @@
   const url = window.location.hostname;
   if (!url.includes("netfree.cc")) return;
 
-  // Avoid duplicates
   if (document.querySelector('.netflix-bottom-nav')) return;
 
-  // Inject Material Icons
   const iconFont = document.createElement('link');
   iconFont.href = 'https://fonts.googleapis.com/icon?family=Material+Icons';
   iconFont.rel = 'stylesheet';
   document.head.appendChild(iconFont);
 
-  // Inject CSS
   const style = document.createElement('style');
   style.textContent = `
     .netflix-bottom-nav {
@@ -27,7 +24,6 @@
       z-index: 9999;
       border-top: 2px solid #e50914;
     }
-
     .netflix-bottom-nav .nav-btn {
       display: flex;
       flex-direction: column;
@@ -38,29 +34,24 @@
       border-radius: 50px;
       padding: 6px 12px;
     }
-
     .netflix-bottom-nav .material-icons {
       font-size: 26px;
       margin-bottom: 3px;
       transition: transform 0.3s ease;
     }
-
     .netflix-bottom-nav .label {
       font-size: 12px;
       transition: opacity 0.3s ease;
     }
-
     .netflix-bottom-nav .nav-btn.active,
     .netflix-bottom-nav .nav-btn:hover {
       color: #fff;
       background: rgba(229, 9, 20, 0.2);
     }
-
     .netflix-bottom-nav .nav-btn.active .material-icons,
     .netflix-bottom-nav .nav-btn:hover .material-icons {
       transform: scale(1.2);
     }
-
     .netflix-bottom-nav .nav-btn.active .label,
     .netflix-bottom-nav .nav-btn:hover .label {
       opacity: 1;
@@ -68,7 +59,6 @@
   `;
   document.head.appendChild(style);
 
-  // Inject HTML
   const navBar = document.createElement('div');
   navBar.className = 'netflix-bottom-nav';
   navBar.innerHTML = `
@@ -84,15 +74,42 @@
       <span class="material-icons">live_tv</span>
       <span class="label">Series</span>
     </a>
+    <a href="#" class="nav-btn" id="prime-btn">
+      <span class="material-icons">ondemand_video</span>
+      <span class="label">Prime</span>
+    </a>
   `;
   document.body.appendChild(navBar);
 
-  // Inject JS for active state switching
+  // Handle active class and Prime action
   document.querySelectorAll('.nav-btn').forEach(btn => {
-    btn.addEventListener('click', function () {
+    btn.addEventListener('click', function (e) {
       document.querySelectorAll('.nav-btn').forEach(b => b.classList.remove('active'));
       this.classList.add('active');
     });
+  });
+
+  // Prime button special JS
+  const primeBtn = document.getElementById('prime-btn');
+  primeBtn.addEventListener('click', function (e) {
+    e.preventDefault();
+    $(".move-ott").removeClass("hide");
+    if (!sessionStorage.getItem("ott_sent")) {
+      $.ajax({
+        type: "POST",
+        url: "/mobile/setting.php",
+        data: { ott: "pv" },
+        success: function(result) {
+          if (result.error == "no") {
+            sessionStorage.setItem("ott_sent", "1");
+            console.log("OTT set successfully");
+          } else {
+            $(".move-ott").addClass("hide");
+            alert_msg("warning", result.error);
+          }
+        }
+      });
+    }
   });
 })();
 
