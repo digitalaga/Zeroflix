@@ -1,147 +1,99 @@
 (function () {
-  if (!location.hostname.includes('netfree.cc')) return;
+  const url = window.location.hostname;
+  if (!url.includes("netfree.cc")) return;
 
+  // Avoid duplicates
+  if (document.querySelector('.netflix-bottom-nav')) return;
+
+  // Inject Material Icons
+  const iconFont = document.createElement('link');
+  iconFont.href = 'https://fonts.googleapis.com/icon?family=Material+Icons';
+  iconFont.rel = 'stylesheet';
+  document.head.appendChild(iconFont);
+
+  // Inject CSS
   const style = document.createElement('style');
   style.textContent = `
-* {  
-  box-sizing: border-box;  
-}  
-  
-html {  
-  font-size: 62.5%;  
-}  
-  
-body {  
-  font-family: Roboto;  
-}  
-  
-.container {  
-  padding-top: 80px;  
-  display: flex;  
-  justify-content: center;  
-  align-items: center;  
-    
-}  
-  
-.phone-bottom {  
-  width: 400px;  
-  height: 60px;  
-  background-color: #4E3CC8;  
-  border-bottom-right-radius: 10px;  
-  border-bottom-left-radius: 10px;  
-  padding: 10px 15px;  
-box-shadow: 0px 4px 6px #4E3CC8;  
-  .nav {  
-    color: #fff;  
-    display: flex;  
-    align-items: center;  
-    height: 100%;  
-    position: relative;  
-    .slide {  
-      width: calc(100% / 3);  
-      height: 100%;  
-      content: '';  
-      position: absolute;  
-      background-color: rgba(255, 255, 255, 0.15);  
-      z-index: 2;  
-      top: 0;  
-      border-radius: 4px;  
-      transform: translateX(0%);  
-transition: transform 350ms ease;  
-    }  
-    &-link {  
-      color: #fff;  
-      text-decoration: none;  
-      flex: 1;  
-      display: flex;  
-      align-items: center;  
-      height: 100%;  
-      justify-content: center;  
-      position: relative;  
-      &.active .nav-text{  
-        opacity: 1;  
-      }  
-      &.active i{  
-        transform: translateX(0%);  
-      }  
-}  
-     
-    &-text {  
-      text-decoration: none;  
-      padding-left: 10px;  
-      display: block;  
-      font-size: 1.6rem;  
-      opacity: 0;  
-       transition: opacity 350ms  ease 100ms;  
-    }  
-    i {  
-      color: #fff;  
-      transform: translateX(80%);  
-      transition: transform 350ms ease;  
-    }  
-  }  
-}  
-  
-.material-icons {  
-  font-family: 'Material Icons';  
-  font-weight: normal;  
-  font-style: normal;  
-  font-size: 24px;  /* Preferred icon size */  
-  display: inline-block;  
-  line-height: 1;  
-  text-transform: none;  
-  letter-spacing: normal;  
-  word-wrap: normal;  
-  white-space: nowrap;  
-  direction: ltr;  
-  
-  /* Support for all WebKit browsers. */  
-  -webkit-font-smoothing: antialiased;  
-  /* Support for Safari and Chrome. */  
-  text-rendering: optimizeLegibility;  
-  
-  /* Support for Firefox. */  
-  -moz-osx-font-smoothing: grayscale;  
-  
-  /* Support for IE. */  
-  font-feature-settings: 'liga';  
-}  
+    .netflix-bottom-nav {
+      position: fixed;
+      bottom: 0;
+      left: 0;
+      width: 100%;
+      background: #141414;
+      display: flex;
+      justify-content: space-around;
+      padding: 10px 0;
+      box-shadow: 0 -2px 10px rgba(0,0,0,0.6);
+      z-index: 9999;
+      border-top: 2px solid #e50914;
+    }
 
+    .netflix-bottom-nav .nav-btn {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      color: #bbb;
+      text-decoration: none;
+      transition: color 0.3s ease, transform 0.3s ease;
+      border-radius: 50px;
+      padding: 6px 12px;
+    }
+
+    .netflix-bottom-nav .material-icons {
+      font-size: 26px;
+      margin-bottom: 3px;
+      transition: transform 0.3s ease;
+    }
+
+    .netflix-bottom-nav .label {
+      font-size: 12px;
+      transition: opacity 0.3s ease;
+    }
+
+    .netflix-bottom-nav .nav-btn.active,
+    .netflix-bottom-nav .nav-btn:hover {
+      color: #fff;
+      background: rgba(229, 9, 20, 0.2);
+    }
+
+    .netflix-bottom-nav .nav-btn.active .material-icons,
+    .netflix-bottom-nav .nav-btn:hover .material-icons {
+      transform: scale(1.2);
+    }
+
+    .netflix-bottom-nav .nav-btn.active .label,
+    .netflix-bottom-nav .nav-btn:hover .label {
+      opacity: 1;
+    }
   `;
   document.head.appendChild(style);
 
-  const navHTML = `
-  <div class="phone-bottom">
-    <nav class="nav">
-      <div class="slide"></div>
-      <a href="https://netfree.cc/mobile/movies?app=1" class="nav-link active" data-index="0">
-        <i class="material-icons md-18">movie</i>
-        <span class="nav-text">Movies</span>
-      </a>
-      <a href="https://netfree.cc/mobile/home?app=1" class="nav-link" data-index="1">
-        <i class="material-icons md-18">home</i>
-        <span class="nav-text">Home</span>
-      </a>
-      <a href="https://netfree.cc/mobile/series?app=1" class="nav-link" data-index="2">
-        <i class="material-icons md-18">live_tv</i>
-        <span class="nav-text">Shows</span>
-      </a>
-    </nav>
-  </div>
+  // Inject HTML
+  const navBar = document.createElement('div');
+  navBar.className = 'netflix-bottom-nav';
+  navBar.innerHTML = `
+    <a href="https://netfree.cc/mobile/movies?app=1" class="nav-btn active">
+      <span class="material-icons">movie</span>
+      <span class="label">Movies</span>
+    </a>
+    <a href="https://netfree.cc/mobile/home?app=1" class="nav-btn">
+      <span class="material-icons">home</span>
+      <span class="label">Home</span>
+    </a>
+    <a href="https://netfree.cc/mobile/series?app=1" class="nav-btn">
+      <span class="material-icons">live_tv</span>
+      <span class="label">Series</span>
+    </a>
   `;
-  document.body.insertAdjacentHTML('beforeend', navHTML);
+  document.body.appendChild(navBar);
 
-  const navLinks = document.querySelectorAll('.nav-link');
-  const slide = document.querySelector('.slide');
-
-  navLinks.forEach((link) =>
-    link.addEventListener('click', function (e) {
-      const index = parseInt(this.dataset.index);
-      slide.style.transform = `translateX(${index * 100}%)`;
-      navLinks.forEach((link) => link.classList.remove('active'));
+  // Inject JS for active state switching
+  document.querySelectorAll('.nav-btn').forEach(btn => {
+    btn.addEventListener('click', function () {
+      document.querySelectorAll('.nav-btn').forEach(b => b.classList.remove('active'));
       this.classList.add('active');
-    })
-  );
+    });
+  });
 })();
 
 // Function to detect when user returns to netfree.cc and reload the page twice
