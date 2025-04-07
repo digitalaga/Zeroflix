@@ -3,95 +3,110 @@
 
   const style = document.createElement('style');
   style.textContent = `
-  * {
-    box-sizing: border-box;
-  }
+* {  
+  box-sizing: border-box;  
+}  
+  
+html {  
+  font-size: 62.5%;  
+}  
+  
+body {  
+  font-family: Roboto;  
+}  
+  
+.container {  
+  padding-top: 80px;  
+  display: flex;  
+  justify-content: center;  
+  align-items: center;  
+    
+}  
+  
+.phone-bottom {  
+  width: 400px;  
+  height: 60px;  
+  background-color: #4E3CC8;  
+  border-bottom-right-radius: 10px;  
+  border-bottom-left-radius: 10px;  
+  padding: 10px 15px;  
+box-shadow: 0px 4px 6px #4E3CC8;  
+  .nav {  
+    color: #fff;  
+    display: flex;  
+    align-items: center;  
+    height: 100%;  
+    position: relative;  
+    .slide {  
+      width: calc(100% / 3);  
+      height: 100%;  
+      content: '';  
+      position: absolute;  
+      background-color: rgba(255, 255, 255, 0.15);  
+      z-index: 2;  
+      top: 0;  
+      border-radius: 4px;  
+      transform: translateX(0%);  
+transition: transform 350ms ease;  
+    }  
+    &-link {  
+      color: #fff;  
+      text-decoration: none;  
+      flex: 1;  
+      display: flex;  
+      align-items: center;  
+      height: 100%;  
+      justify-content: center;  
+      position: relative;  
+      &.active .nav-text{  
+        opacity: 1;  
+      }  
+      &.active i{  
+        transform: translateX(0%);  
+      }  
+}  
+     
+    &-text {  
+      text-decoration: none;  
+      padding-left: 10px;  
+      display: block;  
+      font-size: 1.6rem;  
+      opacity: 0;  
+       transition: opacity 350ms  ease 100ms;  
+    }  
+    i {  
+      color: #fff;  
+      transform: translateX(80%);  
+      transition: transform 350ms ease;  
+    }  
+  }  
+}  
+  
+.material-icons {  
+  font-family: 'Material Icons';  
+  font-weight: normal;  
+  font-style: normal;  
+  font-size: 24px;  /* Preferred icon size */  
+  display: inline-block;  
+  line-height: 1;  
+  text-transform: none;  
+  letter-spacing: normal;  
+  word-wrap: normal;  
+  white-space: nowrap;  
+  direction: ltr;  
+  
+  /* Support for all WebKit browsers. */  
+  -webkit-font-smoothing: antialiased;  
+  /* Support for Safari and Chrome. */  
+  text-rendering: optimizeLegibility;  
+  
+  /* Support for Firefox. */  
+  -moz-osx-font-smoothing: grayscale;  
+  
+  /* Support for IE. */  
+  font-feature-settings: 'liga';  
+}  
 
-  .phone-bottom {
-    width: 100%;
-    height: 60px;
-    background-color: #141414;
-    padding: 10px 15px;
-    position: fixed;
-    bottom: 0;
-    left: 0;
-    z-index: 9999;
-    border-top: 1px solid #333;
-    box-shadow: 0px -2px 8px rgba(0,0,0,0.6);
-  }
-
-  .phone-bottom .nav {
-    display: flex;
-    align-items: center;
-    height: 100%;
-    position: relative;
-  }
-
-  .phone-bottom .nav .slide {
-    width: calc(100% / 3);
-    height: 100%;
-    content: '';
-    position: absolute;
-    background-color: rgba(255, 255, 255, 0.1);
-    z-index: 2;
-    top: 0;
-    border-radius: 4px;
-    transform: translateX(0%);
-    transition: transform 350ms ease;
-  }
-
-  .phone-bottom .nav-link {
-    color: #fff;
-    text-decoration: none;
-    flex: 1;
-    display: flex;
-    align-items: center;
-    height: 100%;
-    justify-content: center;
-    position: relative;
-    z-index: 3;
-  }
-
-  .phone-bottom .nav-link .nav-text {
-    text-decoration: none;
-    padding-left: 10px;
-    display: block;
-    font-size: 1.4rem;
-    opacity: 0;
-    transition: opacity 350ms ease 100ms;
-    color: #fff;
-  }
-
-  .phone-bottom .nav-link i {
-    color: #fff;
-    transform: translateX(80%);
-    transition: transform 350ms ease;
-  }
-
-  .phone-bottom .nav-link.active .nav-text {
-    opacity: 1;
-  }
-
-  .phone-bottom .nav-link.active i {
-    transform: translateX(0%);
-  }
-
-  .material-icons {
-    font-family: 'Material Icons';
-    font-weight: normal;
-    font-style: normal;
-    font-size: 24px;
-    display: inline-block;
-    line-height: 1;
-    text-transform: none;
-    letter-spacing: normal;
-    white-space: nowrap;
-    direction: ltr;
-    -webkit-font-smoothing: antialiased;
-    text-rendering: optimizeLegibility;
-    -moz-osx-font-smoothing: grayscale;
-    font-feature-settings: 'liga';
-  }
   `;
   document.head.appendChild(style);
 
