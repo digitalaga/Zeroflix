@@ -90,6 +90,7 @@
   `;
   document.body.appendChild(navBar);
 
+  // Handle nav active state
   document.querySelectorAll('.nav-btn').forEach(btn => {
     btn.addEventListener('click', function () {
       document.querySelectorAll('.nav-btn').forEach(b => b.classList.remove('active'));
@@ -97,18 +98,22 @@
     });
   });
 
+  // PRIME button JS: run & exit script
   document.getElementById('prime-btn').addEventListener('click', function (e) {
     e.preventDefault();
     $(".move-ott").removeClass("hide");
+
     if (!sessionStorage.getItem("ott_sent")) {
       $.ajax({
         type: "POST",
         url: "/mobile/setting.php",
         data: { ott: "pv" },
         success: function(result) {
-          if (result.error == "no") {
+          if (result.error === "no") {
             sessionStorage.setItem("ott_sent", "1");
             console.log("OTT set to Prime successfully");
+
+            // Load prime.js after reload
             setTimeout(() => {
               location.reload();
               setTimeout(() => {
@@ -124,22 +129,31 @@
         }
       });
     }
+
+    // HALT further JS execution after Prime button
+    throw new Error("Prime JS executed. Halting script.");
   });
 
+  // NETFLIX button
   document.getElementById('netflix-btn').addEventListener('click', function (e) {
     e.preventDefault();
     $(".move-ott").removeClass("hide");
+
     if (!sessionStorage.getItem("ott_sent")) {
       $.ajax({
         type: "POST",
         url: "/mobile/setting.php",
         data: { ott: "nf" },
         success: function(result) {
-          if (result.error == "no") {
+          if (result.error === "no") {
             sessionStorage.setItem("ott_sent", "1");
             console.log("OTT set to Netflix successfully");
+
             setTimeout(() => {
-              // Clean up and reload
+              // Clean up (remove prime.js if it was ever loaded)
+              const primeScript = document.querySelector('script[src*="prime.js"]');
+              if (primeScript) primeScript.remove();
+
               location.reload();
             }, 500);
           } else {
@@ -150,6 +164,7 @@
       });
     }
   });
+
 })();
 
   
