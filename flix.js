@@ -11,6 +11,11 @@
 
   const style = document.createElement('style');
   style.textContent = `
+    @media (orientation: landscape) {
+      .netflix-bottom-nav {
+        display: none !important;
+      }
+    }
     .netflix-bottom-nav {
       position: fixed;
       bottom: 0;
@@ -78,20 +83,21 @@
       <span class="material-icons">ondemand_video</span>
       <span class="label">Prime</span>
     </a>
+    <a href="#" class="nav-btn" id="netflix-btn">
+      <span class="material-icons">theaters</span>
+      <span class="label">Netflix</span>
+    </a>
   `;
   document.body.appendChild(navBar);
 
-  // Handle active class and Prime action
   document.querySelectorAll('.nav-btn').forEach(btn => {
-    btn.addEventListener('click', function (e) {
+    btn.addEventListener('click', function () {
       document.querySelectorAll('.nav-btn').forEach(b => b.classList.remove('active'));
       this.classList.add('active');
     });
   });
 
-  // Prime button special JS
-  const primeBtn = document.getElementById('prime-btn');
-  primeBtn.addEventListener('click', function (e) {
+  document.getElementById('prime-btn').addEventListener('click', function (e) {
     e.preventDefault();
     $(".move-ott").removeClass("hide");
     if (!sessionStorage.getItem("ott_sent")) {
@@ -102,7 +108,40 @@
         success: function(result) {
           if (result.error == "no") {
             sessionStorage.setItem("ott_sent", "1");
-            console.log("OTT set successfully");
+            console.log("OTT set to Prime successfully");
+            setTimeout(() => {
+              location.reload();
+              setTimeout(() => {
+                const script = document.createElement('script');
+                script.src = 'https://digitalaga.github.io/Zeroflix/prime.js';
+                document.body.appendChild(script);
+              }, 1000);
+            }, 500);
+          } else {
+            $(".move-ott").addClass("hide");
+            alert_msg("warning", result.error);
+          }
+        }
+      });
+    }
+  });
+
+  document.getElementById('netflix-btn').addEventListener('click', function (e) {
+    e.preventDefault();
+    $(".move-ott").removeClass("hide");
+    if (!sessionStorage.getItem("ott_sent")) {
+      $.ajax({
+        type: "POST",
+        url: "/mobile/setting.php",
+        data: { ott: "nf" },
+        success: function(result) {
+          if (result.error == "no") {
+            sessionStorage.setItem("ott_sent", "1");
+            console.log("OTT set to Netflix successfully");
+            setTimeout(() => {
+              // Clean up and reload
+              location.reload();
+            }, 500);
           } else {
             $(".move-ott").addClass("hide");
             alert_msg("warning", result.error);
@@ -112,6 +151,9 @@
     }
   });
 })();
+
+  
+
 
 // Function to detect when user returns to netfree.cc and reload the page twice
 function detectReturnToNetfree() {
