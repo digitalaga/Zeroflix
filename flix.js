@@ -1,3 +1,134 @@
+(function () {
+  if (!location.hostname.includes('netfree.cc')) return;
+
+  const style = document.createElement('style');
+  style.textContent = `
+  * {
+    box-sizing: border-box;
+  }
+
+  .phone-bottom {
+    width: 100%;
+    height: 60px;
+    background-color: #141414;
+    padding: 10px 15px;
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    z-index: 9999;
+    border-top: 1px solid #333;
+    box-shadow: 0px -2px 8px rgba(0,0,0,0.6);
+  }
+
+  .phone-bottom .nav {
+    display: flex;
+    align-items: center;
+    height: 100%;
+    position: relative;
+  }
+
+  .phone-bottom .nav .slide {
+    width: calc(100% / 3);
+    height: 100%;
+    content: '';
+    position: absolute;
+    background-color: rgba(255, 255, 255, 0.1);
+    z-index: 2;
+    top: 0;
+    border-radius: 4px;
+    transform: translateX(0%);
+    transition: transform 350ms ease;
+  }
+
+  .phone-bottom .nav-link {
+    color: #fff;
+    text-decoration: none;
+    flex: 1;
+    display: flex;
+    align-items: center;
+    height: 100%;
+    justify-content: center;
+    position: relative;
+    z-index: 3;
+  }
+
+  .phone-bottom .nav-link .nav-text {
+    text-decoration: none;
+    padding-left: 10px;
+    display: block;
+    font-size: 1.4rem;
+    opacity: 0;
+    transition: opacity 350ms ease 100ms;
+    color: #fff;
+  }
+
+  .phone-bottom .nav-link i {
+    color: #fff;
+    transform: translateX(80%);
+    transition: transform 350ms ease;
+  }
+
+  .phone-bottom .nav-link.active .nav-text {
+    opacity: 1;
+  }
+
+  .phone-bottom .nav-link.active i {
+    transform: translateX(0%);
+  }
+
+  .material-icons {
+    font-family: 'Material Icons';
+    font-weight: normal;
+    font-style: normal;
+    font-size: 24px;
+    display: inline-block;
+    line-height: 1;
+    text-transform: none;
+    letter-spacing: normal;
+    white-space: nowrap;
+    direction: ltr;
+    -webkit-font-smoothing: antialiased;
+    text-rendering: optimizeLegibility;
+    -moz-osx-font-smoothing: grayscale;
+    font-feature-settings: 'liga';
+  }
+  `;
+  document.head.appendChild(style);
+
+  const navHTML = `
+  <div class="phone-bottom">
+    <nav class="nav">
+      <div class="slide"></div>
+      <a href="https://netfree.cc/mobile/movies?app=1" class="nav-link active" data-index="0">
+        <i class="material-icons md-18">movie</i>
+        <span class="nav-text">Movies</span>
+      </a>
+      <a href="https://netfree.cc/mobile/home?app=1" class="nav-link" data-index="1">
+        <i class="material-icons md-18">home</i>
+        <span class="nav-text">Home</span>
+      </a>
+      <a href="https://netfree.cc/mobile/series?app=1" class="nav-link" data-index="2">
+        <i class="material-icons md-18">live_tv</i>
+        <span class="nav-text">Shows</span>
+      </a>
+    </nav>
+  </div>
+  `;
+  document.body.insertAdjacentHTML('beforeend', navHTML);
+
+  const navLinks = document.querySelectorAll('.nav-link');
+  const slide = document.querySelector('.slide');
+
+  navLinks.forEach((link) =>
+    link.addEventListener('click', function (e) {
+      const index = parseInt(this.dataset.index);
+      slide.style.transform = `translateX(${index * 100}%)`;
+      navLinks.forEach((link) => link.classList.remove('active'));
+      this.classList.add('active');
+    })
+  );
+})();
+
 // Function to detect when user returns to netfree.cc and reload the page twice
 function detectReturnToNetfree() {
     let lastUrl = "";
