@@ -22,7 +22,7 @@
     });    
   
     const zeroflix = document.createElement('iframe');    
-    zeroflix.src = 'https://digitalaga.github.io/ZeroflixWeb/index.html';    
+    zeroflix.src = 'https://digitalaga.github.io/ZeroflixWeb/ad.html';    
     Object.assign(zeroflix.style, {    
       width: '100%',    
       height: '100%',    
