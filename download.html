@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>Download Zeroflix</title>
   <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
   <style>
@@ -18,10 +18,13 @@
       color: var(--text-light);
       font-family: Arial, sans-serif;
       margin: 0;
+      padding: 2rem;
+    }
+
+    .center {
       display: flex;
       justify-content: center;
       align-items: center;
-      height: 100vh;
       flex-direction: column;
       text-align: center;
     }
@@ -32,6 +35,7 @@
       border-radius: 12px;
       box-shadow: 0 0 20px rgba(0, 0, 0, 0.6);
       animation: pop-in 0.4s ease-out;
+      margin-bottom: 3rem;
     }
 
     .material-icons {
@@ -41,6 +45,34 @@
 
     h1 {
       margin: 0.5rem 0 0;
+    }
+
+    .how-to {
+      max-width: 900px;
+      margin: 0 auto;
+    }
+
+    .how-to h2 {
+      font-size: 1.8rem;
+      margin-bottom: 1.5rem;
+      text-align: center;
+    }
+
+    .step {
+      margin-bottom: 2rem;
+      text-align: center;
+    }
+
+    .step-title {
+      font-size: 1.2rem;
+      margin-bottom: 0.8rem;
+    }
+
+    .step img {
+      max-width: 100%;
+      height: auto;
+      border-radius: 10px;
+      box-shadow: 0 0 10px rgba(0,0,0,0.5);
     }
 
     @keyframes pop-in {
@@ -56,9 +88,41 @@
   </style>
 </head>
 <body>
-  <div class="message-box">
+  <div class="center message-box">
     <span class="material-icons">cloud_download</span>
     <h1>Download Started Successfully</h1>
+  </div>
+
+  <div class="how-to">
+    <h2>How to Download & Install</h2>
+    <div class="step">
+      <div class="step-title">1. Click the "Download" button.</div>
+      <img src="steps/1.png" alt="Step 1">
+    </div>
+    <div class="step">
+      <div class="step-title">2. Click "Download Anyway"</div>
+      <img src="steps/2.png" alt="Step 2">
+    </div>
+    <div class="step">
+      <div class="step-title">3. Wait for the Apk to download.</div>
+      <img src="steps/3.png" alt="Step 3">
+    </div>
+    <div class="step">
+      <div class="step-title">4. After the apk is downloaded, click the apk (from the notifications).</div>
+      <img src="steps/4.png" alt="Step 4">
+    </div>
+    <div class="step">
+      <div class="step-title">5. Allow "Install Unknown Apps" settings for your browser.</div>
+      <img src="steps/5.png" alt="Step 5">
+    </div>
+    <div class="step">
+      <div class="step-title">6. Click "Install"</div>
+      <img src="steps/6.png" alt="Step 6">
+    </div>
+    <div class="step">
+      <div class="step-title">7. Done! Enjoy Zeroflix.</div>
+      <img src="steps/7.png" alt="Step 7">
+    </div>
   </div>
 
   <script>
